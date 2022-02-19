@@ -5,7 +5,8 @@ podTemplate(containers: [
         command: 'sleep',
         args: '30d'
         ),
-]) {
+])   {
+
     node(POD_LABEL) {
         stage('Run pipeline against a gradle project') {
            git
