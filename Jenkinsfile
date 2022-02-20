@@ -46,7 +46,7 @@ podTemplate(containers: [
                 echo 'Failure detected'
             }
             publishHTML (target: [
-              reportDir: 'Chapter08/sample1/build/reports/jacoco/test2/html',
+              reportDir: 'Chapter08/sample1/build/reports/jacoco/test/html',
               reportFiles: 'index.html',
               reportName: "JaCoCocheckstyle Report"
             ])
