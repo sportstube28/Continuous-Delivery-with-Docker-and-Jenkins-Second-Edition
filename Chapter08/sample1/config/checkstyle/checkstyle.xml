@@ -6,9 +6,11 @@
 <module name="Checker">
      <module name="TreeWalker">
 	     <module name="JavadocType">
-		     <module name="ConstantName"/>
                <property name="scope" value="public"/>
           </module>
      </module>
 </module>
+<module name="ConstantName">
+  <property name="format"
+    value="^log(ger)?$|^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$"/>
 </module>
