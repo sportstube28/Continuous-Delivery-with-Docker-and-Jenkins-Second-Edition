@@ -13,12 +13,12 @@ spec:
 ''') {
     node(POD_LABEL) {
       stage('k8s') {
-        git 'https://github.com/dlambrig/Continuous-Delivery-with-Docker-and-Jenkins-Second-Edition.git'
+        git 'https://github.com/sportstube28/Continuous-Delivery-with-Docker-and-Jenkins-Second-Edition.git'
         container('centos') {
           stage('start calculator')
             {
               sh '''
-                curl -ik -H "Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)" --cacert /var/run/secrets/kubernetes.io/serviceaccount/ca.crt  https://kubernetes.default.svc.cluster.local/api/v1/namespaces/default/pods
+                curl -ik -H "Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)" --cacert /var/run/secrets/kubernetes.io/serviceaccount/ca.crt https://kubernetes.default.svc.cluster.local/api/v1/namespaces/default/pods
                 ''' }
           }
       }
