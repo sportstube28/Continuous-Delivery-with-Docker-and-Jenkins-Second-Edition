@@ -11,6 +11,10 @@ spec:
     - 99d
   - name: gradle
     image: gradle:jdk8
+    command:
+    - sleep
+    args:
+    - 99d
   restartPolicy: Never
 ''') {
     node(POD_LABEL) {
