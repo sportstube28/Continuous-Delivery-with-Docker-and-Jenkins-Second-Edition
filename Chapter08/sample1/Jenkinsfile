@@ -53,5 +53,22 @@ spec:
             }
           }
         }
+        post {
+          always {
+            dir("Chapter09/sample3/build/reports/tests/acceptanceTest") {
+              sh 'echo ***********Publish Cucumber Reports***********'
+    					cucumber fileIncludePattern: "**/*index.html", buildStatus: 'UNSTABLE'
+              sh 'echo ***********Publish Cucumber Reports****************'
+        			publishHTML (target: [
+        					allowMissing: false,
+        					alwaysLinkToLastBuild: false,
+        					keepAll: true,
+        					reportDir: 'Chapter09/sample3/build/reports/tests/acceptanceTest',
+        					reportFiles: 'index.html',
+        					reportName: "Jacoco Coverage Report"
+        				])
+            }
+          }
+        }
       }
   }
