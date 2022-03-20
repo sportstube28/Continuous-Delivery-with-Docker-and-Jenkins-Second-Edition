@@ -51,11 +51,7 @@ spec:
               ./gradlew acceptanceTest -Dcalculator.url=http://calculator-service:8080
             '''
             }
-          }
-        }
-        post {
-          always {
-            dir("Chapter09/sample3/build/reports/tests/acceptanceTest") {
+            stage ('Publish Cucumber Reports') {
               sh 'echo ***********Publish Cucumber Reports***********'
     					cucumber fileIncludePattern: "**/*index.html", buildStatus: 'UNSTABLE'
               sh 'echo ***********Publish Cucumber Reports****************'
