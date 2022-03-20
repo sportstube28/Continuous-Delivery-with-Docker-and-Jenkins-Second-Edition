@@ -47,7 +47,6 @@ spec:
             sh '''
               cd Chapter09/sample3
               ls -lrth
-              which gradlew
               chmod +x gradlew
               ./gradlew acceptanceTest -Dcalculator.url=http://calculator-service:8080
             '''
