@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: calculator-deployment
+  namespace: devops-tools
   labels:
     app: calculator
 spec:
@@ -27,6 +28,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: calculator-service
+  namespace: devops-tools
 spec:
   type: NodePort
   selector:

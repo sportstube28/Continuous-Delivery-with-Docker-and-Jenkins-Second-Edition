@@ -20,10 +20,14 @@ spec:
               sh '''
                 cd Chapter08/sample1
                 ls -lrth
-                curl -ik -H "Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)"  https://kubernetes.default.svc.cluster.local/api/v1/namespaces/default/pods
-                curl -ik -H "Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)"  https://kubernetes.default.svc.cluster.local/apis/apps/v1/namespaces/default/deployments -X POST -H "Content-type: application/yaml" --data-binary @hazelcast.yaml
-                curl -ik -H "Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)"  https://kubernetes.default.svc.cluster.local/apis/apps/v1/namespaces/default/deployments -X POST -H "Content-type: application/yaml" --data-binary @calculator.yaml
-                curl -ik -H "Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)"  https://kubernetes.default.svc.cluster.local/api/v1/namespaces/default/pods
+                #curl -ik -H "Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)"  https://kubernetes.default.svc.cluster.local/api/v1/namespaces/default/pods
+                #curl -ik -H "Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)"  https://kubernetes.default.svc.cluster.local/apis/apps/v1/namespaces/default/deployments -X POST -H "Content-type: application/yaml" --data-binary @hazelcast.yaml
+                #curl -ik -H "Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)"  https://kubernetes.default.svc.cluster.local/apis/apps/v1/namespaces/default/deployments -X POST -H "Content-type: application/yaml" --data-binary @calculator.yaml
+                #curl -ik -H "Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)"  https://kubernetes.default.svc.cluster.local/api/v1/namespaces/default/pods
+                curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+                chmod +x ./kubectl
+                ./kubectl apply -f calculator.yaml
+                ./kubectl apply -f hazelcast.yaml
                 ''' }
           }
       }
