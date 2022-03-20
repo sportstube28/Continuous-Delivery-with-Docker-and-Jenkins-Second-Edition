@@ -23,7 +23,7 @@ spec:
                 curl -ik -H "Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)"  https://kubernetes.default.svc.cluster.local/api/v1/namespaces/default/pods
                 curl -ik -H "Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)"  https://kubernetes.default.svc.cluster.local/apis/apps/v1/namespaces/default/deployments -X POST -H "Content-type: application/yaml" --data-binary @hazelcast.yaml
                 curl -ik -H "Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)"  https://kubernetes.default.svc.cluster.local/apis/apps/v1/namespaces/default/deployments -X POST -H "Content-type: application/yaml" --data-binary @calculator.yaml
-                #curl -ik -H "Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)"  https://kubernetes.default.svc.cluster.local/api/v1/namespaces/default/pods
+                curl -ik -H "Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)"  https://kubernetes.default.svc.cluster.local/api/v1/namespaces/default/pods
                 ''' }
           }
       }
