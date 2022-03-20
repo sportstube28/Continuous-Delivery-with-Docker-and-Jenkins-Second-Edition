@@ -9,6 +9,8 @@ spec:
     - sleep
     args:
     - 99d
+  - name: gradle
+    image: gradle:jdk8
   restartPolicy: Never
 ''') {
     node(POD_LABEL) {
@@ -33,10 +35,10 @@ spec:
       }
       stage('gradle')
       {
-        git 'https://github.com/dlambrig/Continuous-Delivery-with-Docker-and-Jenkins-Second-Edition.git'
+        git 'https://github.com/sportstube28/Continuous-Delivery-with-Docker-and-Jenkins-Second-Edition.git'
         container('gradle')
         {
-          stage('test calculator')
+          stage('acceptanceTest calculator')
           {
             sh '''
               cd Chapter09/sample3
