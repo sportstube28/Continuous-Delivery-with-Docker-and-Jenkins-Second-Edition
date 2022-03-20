@@ -31,5 +31,20 @@ spec:
                 ''' }
           }
       }
-    }
+      stage('gradle')
+      {
+        git 'https://github.com/dlambrig/Continuous-Delivery-with-Docker-and-Jenkins-Second-Edition.git'
+        container('gradle')
+        {
+          stage('test calculator')
+          {
+            sh '''
+              cd Chapter09/sample3
+              chmod +x gradlew
+              ./gradlew acceptanceTest -Dcalculator.url=http://calculator-service:8080
+            '''
+            }
+          }
+        }
+      }
   }
