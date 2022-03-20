@@ -1,0 +1,66 @@
+podTemplate(yaml: '''
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+  - name: centos
+    image: centos
+    command:
+    - sleep
+    args:
+    - 99d
+  - name: gradle
+    image: gradle:jdk8
+    command:
+    - sleep
+    args:
+    - 99d
+  restartPolicy: Never
+''') {
+    node(POD_LABEL) {
+      stage('k8s') {
+        git 'https://github.com/sportstube28/Continuous-Delivery-with-Docker-and-Jenkins-Second-Edition.git'
+        container('centos') {
+          stage('start calculator')
+            {
+              sh '''
+                cd Chapter08/sample1
+                #curl -ik -H "Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)"  https://kubernetes.default.svc.cluster.local/api/v1/namespaces/default/pods
+                #curl -ik -H "Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)"  https://kubernetes.default.svc.cluster.local/apis/apps/v1/namespaces/default/deployments -X POST -H "Content-type: application/yaml" --data-binary @hazelcast.yaml
+                #curl -ik -H "Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)"  https://kubernetes.default.svc.cluster.local/apis/apps/v1/namespaces/default/deployments -X POST -H "Content-type: application/yaml" --data-binary @calculator.yaml
+                #curl -ik -H "Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)"  https://kubernetes.default.svc.cluster.local/api/v1/namespaces/default/pods
+                curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+                chmod +x ./kubectl
+                ./kubectl apply -f calculator.yaml
+                ./kubectl apply -f hazelcast.yaml
+                ''' }
+          }
+      }
+      stage('gradle')
+      {
+        git 'https://github.com/sportstube28/Continuous-Delivery-with-Docker-and-Jenkins-Second-Edition.git'
+        container('gradle')
+        {
+          stage('acceptanceTest calculator')
+          {
+            sh '''
+              cd Chapter09/sample3
+              chmod +x gradlew
+              ./gradlew acceptanceTest -Dcalculator.url=http://calculator-service:8080
+            '''
+            }
+            stage ('Publish Cucumber Reports') {
+              sh 'echo ***********Publish Cucumber Reports****************'
+        			publishHTML (target: [
+        					allowMissing: false,
+        					alwaysLinkToLastBuild: false,
+        					keepAll: true,
+        					reportDir: 'Chapter09/sample3/build/reports/tests/acceptanceTest',
+        					reportFiles: 'index.html',
+        					reportName: "Cucumber Report"
+        				])
+            }
+          }
+        }
+      }
+  }
